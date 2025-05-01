@@ -1,3 +1,5 @@
-<x-app-layout>
-    <h1>Welcome Admin {{ Auth::user()->name }}</h1>
-</x-app-layout>
+@extends('layouts.admin')
+
+@section('content')
+    <h1>Welcome to the Admin Dashboard</h1>
+@endsection

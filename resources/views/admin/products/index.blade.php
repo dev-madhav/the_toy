@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -9,6 +9,37 @@
     @endif
 
     <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add Product</a>
+
+    <form method="GET" class="row g-2 mb-3">
+        <div class="col-md-3">
+            <input type="text" name="search" class="form-control" placeholder="Search by name..." value="{{ request('search') }}">
+        </div>
+        <div class="col-md-3">
+            <select name="category_id" class="form-control">
+                <option value="">-- All Categories --</option>
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary">Filter</button>
+            <a href="{{ route('products.index') }}" class="btn btn-secondary">Reset</a>
+        </div>
+
+        
+        <div class="col-md-3">
+            <select name="per_page" class="form-select" onchange="this.form.submit()">
+                <option value="3" {{ $perPage == 3 ? 'selected' : '' }}>3</option>
+                <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+            </select>
+        </div>
+        
+    </form>
 
     <table class="table table-bordered table-hover">
         <thead class="table-light">
@@ -47,6 +78,12 @@
             <tr><td colspan="6" class="text-center">No products found.</td></tr>
         @endforelse
         </tbody>
+        <!-- {{ $products->withQueryString()->links() }} -->
     </table>
+    <div class="d-flex justify-content-center">
+        {{ $products->withQueryString()->links('vendor.pagination.bootstrap-4') }}
+    </div>
 </div>
+
+
 @endsection

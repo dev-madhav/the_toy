@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,9 @@ Route::get('/get-cities/{district_id}', [LocationController::class, 'getCities']
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
 });
+
 
 require __DIR__.'/auth.php';
 
